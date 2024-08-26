@@ -1,0 +1,28 @@
+# Use postgres/example user/password credentials
+version: '3.9'
+
+services:
+
+  db:
+    image: postgres:latest  # Use the official PostgreSQL image
+    container_name: my_postgres  # Name of the PostgreSQL container
+    environment:
+      POSTGRES_USER: foo  # Default PostgreSQL user
+      POSTGRES_PASSWORD: foo  # Replace with your desired password
+      POSTGRES_DB: foo  # Optional: Specify a default database name
+    volumes:
+      - db_data:/var/lib/postgresql/data  # Mount a volume for persistent storage
+      - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    # ports:
+    #   - "5432:5432"  # Expose PostgreSQL port
+
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+
+volumes:
+  db_data:
